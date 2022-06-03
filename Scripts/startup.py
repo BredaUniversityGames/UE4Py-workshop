@@ -23,6 +23,11 @@ class WelcomeLibrary(unreal.BlueprintFunctionLibrary):
     def get_user_name():
         return user_config["name"]
     
+    @unreal.ufunction(params=[str], static=True, meta=dict(Category="Welcome Python Lib"))
+    def set_user_name(name):
+        user_config["name"] = name
+        unreal.log("Set user name: " + name)
+    
     @unreal.ufunction(ret=str, static=True, pure=True, meta=dict(Category="Welcome Python Lib"))
     def get_welcome_message():
         message = [
@@ -33,8 +38,13 @@ class WelcomeLibrary(unreal.BlueprintFunctionLibrary):
         
         return " ".join(message)
 
-    @unreal.ufunction(static=True, pure=True, meta=dict(Category="Welcome Python Lib"))
+    @unreal.ufunction(static=True, meta=dict(Category="Welcome Python Lib"))
     def log_welcome_message():
         unreal.log(WelcomeLibrary.get_welcome_message())
+
+    @unreal.ufunction(static=True, meta=dict(Category="Welcome Python Lib"))
+    def save_user_config():
+        with open(config_path, 'w') as f:
+            json.dump(user_config, f)
 
 WelcomeLibrary.log_welcome_message()
