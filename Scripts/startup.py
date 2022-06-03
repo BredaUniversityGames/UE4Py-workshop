@@ -47,4 +47,7 @@ class WelcomeLibrary(unreal.BlueprintFunctionLibrary):
         with open(config_path, 'w') as f:
             json.dump(user_config, f)
 
-WelcomeLibrary.log_welcome_message()
+## open a widget from python 
+## careful with the path, if wrong will crash at startup
+widget = unreal.EditorAssetLibrary.load_asset("/Game/ThirdPersonBP/Blueprints/WelcomeWidget")
+unreal.EditorUtilitySubsystem().spawn_and_register_tab(widget)
