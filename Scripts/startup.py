@@ -49,5 +49,5 @@ class WelcomeLibrary(unreal.BlueprintFunctionLibrary):
 
 ## open a widget from python 
 ## careful with the path, if wrong will crash at startup
-widget = unreal.EditorAssetLibrary.load_asset("/Game/ThirdPersonBP/Blueprints/WelcomeWidget")
+widget = unreal.EditorAssetLibrary.load_asset("/Game/Utils/UW_WelcomeWidget")
 unreal.EditorUtilitySubsystem().spawn_and_register_tab(widget)
