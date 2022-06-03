@@ -17,8 +17,19 @@ class EditorUtilsLib(unreal.BlueprintFunctionLibrary):
             unreal.log(asset.get_name())
             unreal.log(asset.get_path_name())
             unreal.log(asset.get_class().get_name())
+            unreal.log(asset.get_class())
             unreal.log("##############################")
-            target_path_name = "/".join(("/Game", dir,asset.get_name()))
+            prefix = ""
+            # pattern matching (switch) introduced in python 3.10
+            if isinstance(asset, unreal.EditorUtilityWidgetBlueprint):
+                prefix = "UW"
+            elif isinstance(asset, unreal.Blueprint):
+                prefix = "BP"
+            elif isinstance(asset, unreal.Material):
+                prefix = "M"
+            elif isinstance(asset, unreal.MaterialInstance):
+                prefix = "MI"
+            target_path_name = "/".join(("/Game", dir, "_".join((prefix, asset.get_name()))))
             unreal.EditorAssetLibrary.rename_asset(asset.get_path_name(), target_path_name)
 
 
