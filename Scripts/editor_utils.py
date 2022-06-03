@@ -14,10 +14,12 @@ class EditorUtilsLib(unreal.BlueprintFunctionLibrary):
         for n, asset in enumerate(selected_assets):
             unreal.log("selected asset {}:".format(n+1))
             unreal.log(asset.get_full_name())
-            unreal.log(asset.get_fname())
+            unreal.log(asset.get_name())
             unreal.log(asset.get_path_name())
-            unreal.log(asset.get_class())
+            unreal.log(asset.get_class().get_name())
             unreal.log("##############################")
+            target_path_name = "/".join(("/Game", dir,asset.get_name()))
+            unreal.EditorAssetLibrary.rename_asset(asset.get_path_name(), target_path_name)
 
 
 unreal.log("Imported PyEditorUtils")
